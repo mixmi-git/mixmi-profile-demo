@@ -1,6 +1,7 @@
 'use client'
 
-// Updated with TypeScript interfaces this is another comment to test
+// Updated external links to open in new tabs - November 2024
+// Added iframe optimizations - November 2024
 
 
 
@@ -677,7 +678,12 @@ export default function Component() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {projects.map((project) => (
                     <Card key={project.id} className="bg-gray-800/50 border-gray-700 overflow-hidden min-h-[5rem]">
-                      <Link href={project.link} className="flex h-full group">
+                      <Link 
+                        href={project.link} 
+                        className="flex h-full group"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <div className="flex h-full">
                           <div className="relative w-24 h-full p-1">
                             <div className="relative w-full h-full rounded-[3px] overflow-hidden">
@@ -716,6 +722,8 @@ export default function Component() {
                             allow="autoplay; encrypted-media"
                             allowFullScreen
                             loading="lazy"
+                            rel="noopener noreferrer"
+                            target="_blank"
                           ></iframe>
                         </div>
                         <h3 className="mt-2 text-lg font-semibold text-white">{video.title}</h3>
