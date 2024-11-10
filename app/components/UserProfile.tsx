@@ -363,7 +363,12 @@ export default function Component() {
                         id="fileInput" 
                         type="file" 
                         accept="image/*" 
-                        onChange={(e) => handleImageChange(e.target.files[0])} 
+                        onChange={(e) => {
+                          const files = e.target.files
+                          if (files && files.length > 0) {
+                            handleImageChange(files[0])
+                          }
+                        }} 
                         className="hidden"
                       />
                     </div>
@@ -482,7 +487,12 @@ export default function Component() {
                                     id={`project-image-${index}`}
                                     type="file"
                                     accept="image/*"
-                                    onChange={(e) => handleProjectImageChange(index, e.target.files[0])}
+                                    onChange={(e) => {
+                                      const files = e.target.files
+                                      if (files && files.length > 0) {
+                                        handleProjectImageChange(index, files[0])
+                                      }
+                                    }}
                                   />
                                 </div>
                               </div>
