@@ -311,6 +311,13 @@ export default function Component() {
     // Here you would typically save the data to your backend
   }
 
+  const handleStickerChange = (checked: boolean) => {
+    setSticker(prev => ({
+      ...prev,
+      enabled: checked
+    }));
+  };
+
   return (
     <div className="dark min-h-screen bg-gray-900 text-gray-100">
       <style jsx>{`
@@ -568,7 +575,7 @@ export default function Component() {
                     <Checkbox
                       id="sticker-enabled"
                       checked={sticker.enabled}
-                      onCheckedChange={(checked) => setSticker(prev => ({ ...prev, enabled: checked }))}
+                      onCheckedChange={handleStickerChange}
                     />
                     <Label htmlFor="sticker-enabled">Enable profile sticker</Label>
                   </div>
