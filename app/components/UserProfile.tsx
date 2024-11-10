@@ -32,7 +32,7 @@ interface SocialLink {
   url: string;
 }
 
-interface Project {
+export interface Project {
   id: number;
   title: string;
   description: string;
@@ -40,12 +40,12 @@ interface Project {
   link: string;
 }
 
-interface Video {
+export interface Video {
   id: string;
   title: string;
 }
 
-interface Profile {
+export interface Profile {
   name: string;
   title: string;
   bio: string;
