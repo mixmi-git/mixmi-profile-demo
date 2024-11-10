@@ -53,6 +53,19 @@ interface Profile {
   socialLinks: SocialLink[];
 }
 
+// Add interface for form errors
+interface FormErrors {
+  name: string;
+  title: string;
+  bio: string;
+  socialLinks: string[];
+}
+
+interface Sticker {
+  enabled: boolean;
+  image: string;
+}
+
 function Navbar({ isLoggedIn, onLoginToggle }: NavbarProps) {
   return (
     <nav className="bg-gray-900 py-6 px-8 flex items-center justify-between">
@@ -86,7 +99,7 @@ function Navbar({ isLoggedIn, onLoginToggle }: NavbarProps) {
 export default function Component() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<Profile>({
     name: "Ima Faque",
     title: "Producer and DJ / Visual Artist",
     bio: "Mixing vibes pa' que lo sientas—electrónica, street beats callejeros, and visuals que te explotan la mente. Después de años explorando digital art, I'm here pa' romper lo tradicional y llevarte a un viaje audiovisual único.",
@@ -99,7 +112,7 @@ export default function Component() {
     ]
   })
 
-  const [projects, setProjects] = useState([
+  const [projects, setProjects] = useState<Project[]>([
     {
       id: 1,
       title: "Beach Raves",
@@ -123,7 +136,7 @@ export default function Component() {
     }
   ])
 
-  const [videos, setVideos] = useState([
+  const [videos, setVideos] = useState<Video[]>([
     { 
       id: 'BFJu2NrIfx0', 
       title: 'Primavera Sound'
@@ -138,12 +151,12 @@ export default function Component() {
     },
   ])
 
-  const [sticker, setSticker] = useState({
+  const [sticker, setSticker] = useState<Sticker>({
     enabled: true,
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/daisy-blue-1sqZRfemKwLyREL0Eo89EfmQUT5wst.png"
   })
 
-  const [formErrors, setFormErrors] = useState({
+  const [formErrors, setFormErrors] = useState<FormErrors>({
     name: '',
     title: '',
     bio: '',
@@ -155,12 +168,12 @@ export default function Component() {
     setIsEditing(false)
   }
 
-  const handleProfileChange = (e) => {
+  const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setProfile(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSocialLinkChange = (index, field, value) => {
+  const handleSocialLinkChange = (index: number, field: string, value: string) => {
     setProfile(prev => ({
       ...prev,
       socialLinks: prev.socialLinks.map((link, i) => 
@@ -176,24 +189,24 @@ export default function Component() {
     }))
   }
 
-  const removeSocialLink = (index) => {
+  const removeSocialLink = (index: number) => {
     setProfile(prev => ({
       ...prev,
       socialLinks: prev.socialLinks.filter((_, i) => i !== index)
     }))
   }
 
-  const handleImageChange = (file) => {
+  const handleImageChange = (file: File | null) => {
     if (file) {
       const reader = new FileReader()
       reader.onloadend = () => {
-        setProfile(prev => ({ ...prev, image: reader.result }))
+        setProfile(prev => ({ ...prev, image: reader.result as string }))
       }
       reader.readAsDataURL(file)
     }
   }
 
-  const handleDrop = useCallback((e) => {
+  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     const file = e.dataTransfer.files[0]
     if (file && file.type.startsWith('image/')) {
@@ -201,22 +214,22 @@ export default function Component() {
     }
   }, [])
 
-  const handleDragOver = useCallback((e) => {
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
   }, [])
 
-  const handleProjectChange = (index, field, value) => {
+  const handleProjectChange = (index: number, field: keyof Project, value: string) => {
     setProjects(prev => prev.map((project, i) => 
       i === index ? { ...project, [field]: value } : project
     ))
   }
 
-  const handleProjectImageChange = (index, file) => {
+  const handleProjectImageChange = (index: number, file: File | null) => {
     if (file) {
       const reader = new FileReader()
       reader.onloadend = () => {
         setProjects(prev => prev.map((project, i) => 
-          i === index ? { ...project, image: reader.result } : project
+          i === index ? { ...project, image: reader.result as string } : project
         ))
       }
       reader.readAsDataURL(file)
@@ -227,11 +240,11 @@ export default function Component() {
     setProjects(prev => [...prev, { id: Date.now(), title: "", description: "", image: "", link: "" }])
   }
 
-  const removeProject = (index) => {
+  const removeProject = (index: number) => {
     setProjects(prev => prev.filter((_, i) => i !== index))
   }
 
-  const handleVideoChange = (index, field, value) => {
+  const handleVideoChange = (index: number, field: string, value: string) => {
     setVideos(prev => prev.map((video, i) => 
       i === index ? { ...video, [field]: value } : video
     ))
@@ -241,7 +254,7 @@ export default function Component() {
     setVideos(prev => [...prev, { id: '', title: '' }])
   }
 
-  const removeVideo = (index) => {
+  const removeVideo = (index: number) => {
     setVideos(prev => prev.filter((_, i) => i !== index))
   }
 
