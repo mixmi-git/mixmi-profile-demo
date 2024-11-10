@@ -1,5 +1,9 @@
 'use client'
 
+// Updated with TypeScript interfaces
+
+
+
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useCallback } from "react"
@@ -18,7 +22,38 @@ import {
 } from "@/components/ui/accordion"
 import { Checkbox } from "@/components/ui/checkbox"
 
-function Navbar({ isLoggedIn, onLoginToggle }) {
+interface NavbarProps {
+  isLoggedIn: boolean;
+  onLoginToggle: () => void;
+}
+
+interface SocialLink {
+  platform: string;
+  url: string;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
+
+interface Video {
+  id: string;
+  title: string;
+}
+
+interface Profile {
+  name: string;
+  title: string;
+  bio: string;
+  image: string;
+  socialLinks: SocialLink[];
+}
+
+function Navbar({ isLoggedIn, onLoginToggle }: NavbarProps) {
   return (
     <nav className="bg-gray-900 py-6 px-8 flex items-center justify-between">
       <div className="flex items-center">
