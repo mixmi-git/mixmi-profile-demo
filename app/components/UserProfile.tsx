@@ -723,7 +723,6 @@ export default function Component() {
                             allowFullScreen
                             loading="lazy"
                             rel="noopener noreferrer"
-                            target="_blank"
                           ></iframe>
                         </div>
                         <h3 className="mt-2 text-lg font-semibold text-white">{video.title}</h3>
